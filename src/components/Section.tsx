@@ -1,21 +1,24 @@
 import { ReactNode } from 'react';
 
 type SectionProps = {
-  title?: string;
-  subtitle?: string;
-  children?: ReactNode;
+  children?: ReactNode
+  backgroundColor?: string
+  showWave?: boolean
+  waveColor?: String
+  height?: string
 };
 
-export default function Section({ title, subtitle, children }: SectionProps) {
+export default function Section({  children, backgroundColor = 'bg-white', showWave = false, height='min-h-screen', waveColor='#f97316'}: SectionProps) {
   return (
-    <section className="relative bg-pink-400 text-black overflow-hidden pb-24">
-      <div className="max-w-6xl mx-auto px-4 text-center pt-20">
-        {title && <h1 className="text-6xl font-extrabold text-white mb-4">{title}</h1>}
-        {subtitle && <h2 className="text-2xl font-medium text-white mb-8">{subtitle}</h2>}
+    <section className={`relative ${backgroundColor} text-black overflow-hidden pb-24 ${height}`}>
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
+        
         {children}
       </div>
 
       {/* Wave kecil-kecil di bawah */}
+
+      {showWave && (
       <div className="absolute bottom-0 left-0 w-full">
         <svg
           viewBox="0 0 1440 60"
@@ -23,7 +26,7 @@ export default function Section({ title, subtitle, children }: SectionProps) {
           preserveAspectRatio="none"
         >
           <path
-            fill="#facc15"
+            fill={`${waveColor}`}
             d="
               M0,30 
               Q30,0 60,30 
@@ -57,6 +60,7 @@ export default function Section({ title, subtitle, children }: SectionProps) {
           />
         </svg>
       </div>
+       )}
     </section>
   );
 }
