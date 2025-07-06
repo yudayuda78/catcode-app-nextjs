@@ -1,6 +1,6 @@
 'use client'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-3xl overflow-hidden">
@@ -8,44 +8,60 @@ export default function LoginPage() {
         {/* KIRI - Oranye */}
         <div className="bg-orange-500 text-white flex items-center justify-center p-10">
           <div className="text-center space-y-6">
-            <h2 className="text-4xl font-extrabold">Selamat Datang!</h2>
+            <h2 className="text-4xl font-extrabold">Gabung Sekarang!</h2>
             <p className="text-lg font-light">
-              Belajar jadi lebih menyenangkan dan fokus dengan desain cerah dan nyaman.
+              Mulai perjalanan belajarmu dengan pengalaman menyenangkan dan penuh warna.
             </p>
           </div>
         </div>
 
-        {/* KANAN - Form Login */}
+        {/* KANAN - Form Register */}
         <div className="bg-white p-10">
           <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
-            Masuk ke Akun Anda
+            Daftar Akun Baru
           </h1>
 
           <form className="space-y-5">
-            {/* Email */}
+            {/* Input Nama */}
+            <input
+              type="text"
+              placeholder="Nama lengkap"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
+            />
+
+            {/* Input Email */}
             <input
               type="email"
-              id="email"
               placeholder="Email"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
 
-            {/* Password */}
+            {/* Input Password */}
             <input
               type="password"
-              id="password"
-              placeholder="Kata sandi"
+              placeholder="Kata sandi (min. 6 karakter)"
+              minLength={6}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
 
-            {/* Tombol Login */}
+            {/* Konfirmasi Password */}
+            <input
+              type="password"
+              placeholder="Konfirmasi kata sandi"
+              minLength={6}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
+            />
+
+            {/* Tombol Daftar */}
             <button
               type="submit"
               className="w-full bg-orange-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-orange-400 transition"
             >
-              Masuk
+              Daftar
             </button>
           </form>
 
@@ -56,21 +72,21 @@ export default function LoginPage() {
             <hr className="flex-grow border-t border-gray-300" />
           </div>
 
-          {/* Tombol Login dengan Gmail */}
+          {/* Tombol Gmail */}
           <button
             type="button"
-            onClick={() => alert('Login dengan Gmail')}
+            onClick={() => alert('Daftar dengan Gmail')}
             className="w-full flex items-center justify-center gap-3 border border-gray-300 text-gray-700 font-semibold py-3 rounded-lg hover:bg-gray-100 transition"
           >
             <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
-            Login dengan Gmail
+            Daftar dengan Gmail
           </button>
 
-          {/* Link ke Register */}
+          {/* Link Login */}
           <p className="text-sm text-center text-gray-600 mt-6">
-            Belum punya akun?{' '}
-            <a href="/register" className="text-orange-500 font-semibold hover:underline">
-              Daftar
+            Sudah punya akun?{' '}
+            <a href="/login" className="text-orange-500 font-semibold hover:underline">
+              Masuk di sini
             </a>
           </p>
         </div>

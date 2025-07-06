@@ -33,17 +33,12 @@
 
             {/* Right menu */}
             <div className="flex items-center gap-4 text-sm font-semibold">
-            <a href="#" className="hover:underline">Toy Store</a>
-            <div className="flex items-center gap-1">
-                <span>⭐</span>
-                <span>0/10</span>
-            </div>
-            <div className="flex items-center gap-1">
-                <span>🍒</span>
-                <span>0</span>
-            </div>
-            <button className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-400 transition cursor-pointer">
-            Sign In
+           
+            <button className="border-1 bg-white text-orange-500 px-4 py-2 rounded hover:bg-orange-400 hover:text-white transition cursor-pointer">
+            Register
+          </button>
+            <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-400 transition cursor-pointer">
+            Login
           </button>
             </div>
         </div>
