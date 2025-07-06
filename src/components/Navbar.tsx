@@ -19,9 +19,9 @@
                 />
             </Link>
 
-            <a href="#" className="hover:underline">Shop Cereal</a>
-            <Link href="/about" className="hover:underline">About Us</Link>
-            <a href="#" className="hover:underline">Gallery</a>
+            <a href="#" className="hover:underline">Course</a>
+            <Link href="#" className="hover:underline">About Us</Link>
+            <a href="#" className="hover:underline">Roadmap</a>
             </div>
 
             {/* Center logo (menjorok ke bawah) */}
