@@ -19,7 +19,7 @@
                 />
             </Link>
 
-            <a href="#" className="hover:underline">Course</a>
+            <Link href="/course" className="hover:underline">Course</Link>
             <Link href="#" className="hover:underline">About Us</Link>
             <a href="#" className="hover:underline">Roadmap</a>
             </div>
