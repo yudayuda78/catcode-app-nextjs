@@ -12,17 +12,17 @@ export default function EcoursePage() {
   const courses = [
     {
       name: 'HTML',
-      icon: '/stacklogo/html.webp',
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg' ,
       progress: 75,
     },
     {
       name: 'CSS',
-      icon: '/stacklogo/css.webp',
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg' ,
       progress: 40,
     },
     {
       name: 'JavaScript',
-      icon: '/stacklogo/js.webp',
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg',
       progress: 10,
     },
   ]
