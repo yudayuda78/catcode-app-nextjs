@@ -1,6 +1,14 @@
 'use client'
 
+import { useState } from "react"
+
+
 export default function RegisterPage() {
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-3xl overflow-hidden">
@@ -25,7 +33,7 @@ export default function RegisterPage() {
             {/* Input Nama */}
             <input
               type="text"
-              placeholder="Nama lengkap"
+              placeholder="username"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
