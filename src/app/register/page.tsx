@@ -9,6 +9,8 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
+  
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-3xl overflow-hidden">
@@ -34,6 +36,8 @@ export default function RegisterPage() {
             <input
               type="text"
               placeholder="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
@@ -42,6 +46,8 @@ export default function RegisterPage() {
             <input
               type="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
@@ -51,6 +57,8 @@ export default function RegisterPage() {
               type="password"
               placeholder="Kata sandi (min. 6 karakter)"
               minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
@@ -60,6 +68,8 @@ export default function RegisterPage() {
               type="password"
               placeholder="Konfirmasi kata sandi"
               minLength={6}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
@@ -67,6 +77,13 @@ export default function RegisterPage() {
             {/* Tombol Daftar */}
             <button
               type="submit"
+              onClick={() => {
+                if (password !== confirmPassword) {
+                  alert("Kata sandi tidak cocok");
+                } else {
+                  alert("Pendaftaran berhasil");
+                }
+              }}
               className="w-full bg-orange-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-orange-400 transition"
             >
               Daftar
