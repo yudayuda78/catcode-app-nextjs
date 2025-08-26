@@ -1,15 +1,47 @@
 'use client'
 
 import { useState } from "react"
+import { useRouter } from "next/navigation";
 
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [message, setMessage] = useState("")
 
-  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage("Kata sandi tidak cocok");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await res.json();
+      console.log("Registration successful:", data);
+      router.push("/login");
+    } catch (error) {
+      console.error("Register error:", error);
+      setMessage("Pendaftaran gagal");
+    }
+
+    alert("Pendaftaran berhasil");
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
@@ -31,7 +63,7 @@ export default function RegisterPage() {
             Daftar Akun Baru
           </h1>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Input Nama */}
             <input
               type="text"
@@ -77,18 +109,16 @@ export default function RegisterPage() {
             {/* Tombol Daftar */}
             <button
               type="submit"
-              onClick={() => {
-                if (password !== confirmPassword) {
-                  alert("Kata sandi tidak cocok");
-                } else {
-                  alert("Pendaftaran berhasil");
-                }
-              }}
+            
               className="w-full bg-orange-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-orange-400 transition"
             >
               Daftar
             </button>
           </form>
+
+           {message && (
+            <p className="text-center mt-4 text-sm text-red-500">{message}</p>
+          )}
 
           {/* Divider */}
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500 my-6">
