@@ -1,7 +1,22 @@
+    "use client"
     import Link from "next/link";
     import Image from "next/image";
+    import { use, useEffect, useState } from "react";
 
     export default function Navbar() {
+        const [user, setUser] = useState<{ id: string; email: string; username: string } | null>(null);
+
+        useEffect(() => {
+            const fetchUser = async () => {
+                const response = await fetch("/api/me");
+                if (response.ok) {
+                    const data = await response.json();
+                    setUser(data.user);
+                }
+            };
+            fetchUser();
+        }, []);
+
     return (
         <nav className="relative bg-white border border-black px-6 py-4 text-black">
         {/* Container */}
@@ -32,17 +47,32 @@
             </div>
 
             {/* Right menu */}
+           
             <div className="flex items-center gap-4 text-sm font-semibold">
-            <Link href="/register">
+            {user ? (
+            <>
+              <span className="text-gray-700">Hi, {user.username || user.email}</span>
+              <button
+               
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-400 transition cursor-pointer"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/register">
                 <button className="border-1 bg-white text-orange-500 px-4 py-2 rounded hover:bg-orange-400 hover:text-white transition cursor-pointer">
-                    Register
+                  Register
                 </button>
-            </Link>
-            <Link href="/login">
+              </Link>
+              <Link href="/login">
                 <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-400 transition cursor-pointer">
-                    Login
+                  Login
                 </button>
-            </Link>
+              </Link>
+            </>
+          )}
             </div>
         </div>
         </nav>
