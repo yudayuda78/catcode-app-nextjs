@@ -1,6 +1,41 @@
 'use client'
 
+import { useState } from "react"
+import { useRouter } from "next/navigation";
+
+
 export default function LoginPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [message, setMessage] = useState("")
+  
+  const handleSubmit =async (e: React.FormEvent) => {
+    e.preventDefault()
+    setMessage("")
+
+    try{
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      })
+
+      const data = await res.json()
+      if(!res.ok) {
+        setMessage(data.message || "Login gagal")
+      }else{
+        router.push("/")
+      }
+    }catch(err){
+      console.log(err)
+      setMessage("Login gagal")
+    }
+
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-3xl overflow-hidden">
@@ -21,12 +56,14 @@ export default function LoginPage() {
             Masuk ke Akun Anda
           </h1>
 
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Email */}
             <input
               type="email"
               id="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
@@ -36,6 +73,8 @@ export default function LoginPage() {
               type="password"
               id="password"
               placeholder="Kata sandi"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />

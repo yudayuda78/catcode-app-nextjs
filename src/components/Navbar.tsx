@@ -33,13 +33,16 @@
 
             {/* Right menu */}
             <div className="flex items-center gap-4 text-sm font-semibold">
-           
-            <button className="border-1 bg-white text-orange-500 px-4 py-2 rounded hover:bg-orange-400 hover:text-white transition cursor-pointer">
-            Register
-          </button>
-            <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-400 transition cursor-pointer">
-            Login
-          </button>
+            <Link href="/register">
+                <button className="border-1 bg-white text-orange-500 px-4 py-2 rounded hover:bg-orange-400 hover:text-white transition cursor-pointer">
+                    Register
+                </button>
+            </Link>
+            <Link href="/login">
+                <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-400 transition cursor-pointer">
+                    Login
+                </button>
+            </Link>
             </div>
         </div>
         </nav>
