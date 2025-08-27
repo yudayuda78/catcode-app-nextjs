@@ -2,9 +2,11 @@
     import Link from "next/link";
     import Image from "next/image";
     import { use, useEffect, useState } from "react";
+    import { useRouter } from "next/navigation";
 
     export default function Navbar() {
         const [user, setUser] = useState<{ id: string; email: string; username: string } | null>(null);
+        const router = useRouter();
 
         useEffect(() => {
             const fetchUser = async () => {
@@ -16,6 +18,21 @@
             };
             fetchUser();
         }, []);
+
+        const handleLogout = async () => {
+            try {
+                const res = await fetch("/api/logout", {
+                method: "POST",
+            });
+
+            if (res.ok) {
+                setUser(null); // reset state user
+                router.push("/login"); // redirect ke login
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
+        };
 
     return (
         <nav className="relative bg-white border border-black px-6 py-4 text-black">
@@ -53,7 +70,7 @@
             <>
               <span className="text-gray-700">Hi, {user.username || user.email}</span>
               <button
-               
+                onClick={handleLogout}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-400 transition cursor-pointer"
               >
                 Logout
