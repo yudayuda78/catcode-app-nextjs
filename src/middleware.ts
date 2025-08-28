@@ -14,6 +14,7 @@ async function verifyJWT(token: string) {
 }
 
 export async function middleware(request: NextRequest) {
+  console.log("URL:", request.url)
   const { pathname } = request.nextUrl
   const token = request.cookies.get('token')?.value
 
@@ -25,9 +26,15 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (!token) {
+   if (!token && pathname.match(/^\/course\/[^/]+$/)) {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/login/:path*', '/register/:path*'],
+  matcher: ['/login/:path*', '/register/:path*', "/course/:path*"],
 }
