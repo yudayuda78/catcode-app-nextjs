@@ -1,35 +1,39 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Section from '@/components/Section'
 import Image from 'next/image'
+import Link from 'next/link'
+
+type Course = {
+  title: string
+  slug: string
+  image?: string
+  description?: string
+  createdAt: string
+}
+
 
 export default function EcoursePage() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [courses, setCourses] = useState<Course[]>([])
 
-  const courses = [
-    {
-      name: 'HTML',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg' ,
-      progress: 75,
-    },
-    {
-      name: 'CSS',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg' ,
-      progress: 40,
-    },
-    {
-      name: 'JavaScript',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg',
-      progress: 10,
-    },
-  ]
+
+  useEffect(() => {
+    fetch('/api/course')
+      .then(res => res.json())
+      .then((data: Course[]) => setCourses(data))
+      .catch(err => console.error(err))
+  }, [])
+
+
+
 
   // Filter berdasarkan pencarian
   const filteredCourses = courses.filter(course =>
-    course.name.toLowerCase().includes(searchTerm.toLowerCase())
+    course.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
@@ -62,16 +66,16 @@ export default function EcoursePage() {
                   className="border-2 border-orange-500 bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:scale-105 transition"
                 >
                   <Image
-                    src={course.icon}
-                    alt={course.name + ' Logo'}
+                    src={course.image || '/default-course.png'}
+                    alt={course.title + ' Logo'}
                     width={60}
                     height={60}
                     className="mb-4"
                   />
-                  <p className="text-black text-xl mb-2">{course.name}</p>
+                  <p className="text-black text-xl mb-2">{course.title}</p>
 
                   {/* Progress bar */}
-                  <div className="w-full mt-4 mb-2">
+                  {/* <div className="w-full mt-4 mb-2">
                     <div className="text-sm text-gray-600 text-left mb-1">
                       Progress: {course.progress}%
                     </div>
@@ -81,11 +85,12 @@ export default function EcoursePage() {
                         style={{ width: `${course.progress}%` }}
                       />
                     </div>
-                  </div>
-
-                  <button className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg shadow hover:bg-orange-400 transition">
-                    Belajar
-                  </button>
+                  </div> */}
+                  <Link href={`/course/${course.slug}`}>
+                    <button className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg shadow hover:bg-orange-400 transition">
+                      Belajar
+                    </button>
+                  </Link>
                 </div>
               ))
             ) : (

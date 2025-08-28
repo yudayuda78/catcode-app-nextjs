@@ -20,3 +20,12 @@ model User {
   password  String
   createAt DateTime @default(now())
 }
+
+model Course{
+  id    Int @id @default(autoincrement())
+  title String
+  slug  String @unique
+  image String?
+  description String?
+  createdAt DateTime @default(now())
+}
