@@ -28,4 +28,32 @@ model Course{
   image String?
   description String?
   createdAt DateTime @default(now())
+  topics Topic[]
+}
+
+model Topic{
+  id Int @id @default(autoincrement())
+  title String
+  createdAt DateTime @default(now())
+  courseId  Int
+  course    Course @relation(fields: [courseId], references: [id])
+  lessons   Lesson[]
+  tests     Test[] 
+}
+
+model Lesson{
+  id Int @id @default(autoincrement())
+  title String
+  videoUrl String
+  createdAt DateTime @default(now())
+  topicId  Int
+  topic    Topic @relation(fields: [topicId], references: [id]) 
+}
+
+model Test{
+  id Int @id @default(autoincrement())
+  title String
+  createdAt DateTime @default(now())
+  topicId  Int
+  topic    Topic @relation(fields: [topicId], references: [id])
 }
