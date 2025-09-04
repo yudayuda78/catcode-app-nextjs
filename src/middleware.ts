@@ -5,8 +5,6 @@ import { jwtVerify } from 'jose'
 const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET || 'secret_key_default')
 const PUBLIC_PATHS = ['/login', '/register']
 
-
-
 async function verifyJWT(token: string) {
   try {
     return await jwtVerify(token, SECRET_KEY)
@@ -29,7 +27,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!token) {
-    if (!token && /^\/course(\/.*)?$/.test(pathname)) {
+   if (!token && pathname.match(/^\/course\/[^/]+$/)) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
   }
@@ -38,5 +36,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/login/:path*', '/register/:path*', '/course', '/course/:path*'],
+  matcher: ['/login/:path*', '/register/:path*', "/course/:path*"],
 }

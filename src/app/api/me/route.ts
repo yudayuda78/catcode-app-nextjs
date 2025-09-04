@@ -14,7 +14,6 @@ export async function GET(request: Request) {
 
 
 
-
         if (!token) {
             return NextResponse.json({ message: "Token tidak ditemukan" }, { status: 401 });
         }
