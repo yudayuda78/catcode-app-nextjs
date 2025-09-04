@@ -6,10 +6,14 @@ const SECRET_KEY = process.env.JWT_SECRET || "0hmyg00dn3ss/!!33";
 
 export async function GET(request: Request) {
     try{
+        
         const token = request.headers.get("cookie")
             ?.split("; ")
             .find((row) => row.startsWith("token="))
             ?.split("=")[1];
+
+
+
 
         if (!token) {
             return NextResponse.json({ message: "Token tidak ditemukan" }, { status: 401 });

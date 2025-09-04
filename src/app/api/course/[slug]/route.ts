@@ -5,8 +5,8 @@ interface Params {
   params: { slug: string }
 }
 
-export async function GET(request: Request, { params }: Params) {
-    const {slug} = params
+export async function GET(request: Request, context: { params: Promise<{ slug: string }> }) {
+    const { slug } = await context.params
     const course = await prisma.course.findUnique({
         where: { slug },
         include: {

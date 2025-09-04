@@ -31,7 +31,7 @@ export default function EcoursePage() {
 
 
 
-  // Filter berdasarkan pencarian
+  // Filter
   const filteredCourses = courses.filter(course =>
     course.title.toLowerCase().includes(searchTerm.toLowerCase())
   )

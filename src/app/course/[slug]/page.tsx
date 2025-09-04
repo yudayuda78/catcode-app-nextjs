@@ -12,6 +12,17 @@ export default function CourseDetailPage() {
   const params = useParams()
   const slug = params.slug // misalnya: "html", "css", "javascript"
 
+  useEffect(() => {
+    // Fetch detail course berdasarkan slug
+    fetch(`/api/course/${slug}`)
+      .then(res => res.json())
+      .then(data => {
+        // Simpan data course ke state jika perlu
+        console.log(data)
+      })
+      .catch(err => console.error(err))
+  }, [slug])
+
   return (
    <div className="min-h-screen flex flex-col">
       <Navbar />
