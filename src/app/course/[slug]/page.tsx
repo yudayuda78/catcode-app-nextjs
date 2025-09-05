@@ -8,18 +8,51 @@ import Section from '@/components/Section'
 import Image from 'next/image'
 import Link from 'next/link'
 
+
+type Lesson = {
+  id: number;
+  title: string;
+  videoUrl: string;
+  createdAt: string;
+  topicId: number;
+};
+
+type Test = {
+  id: number;
+  title: string;
+  createdAt: string;
+  topicId: number;
+};
+
+type Topic = {
+  id: number;
+  title: string;
+  createdAt: string;
+  courseId: number;
+  lessons: Lesson[];
+  tests: Test[];
+};
+
+type Course = {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+  description: string | null;
+  createdAt: string;
+  topics: Topic[];
+};
+
+
 export default function CourseDetailPage() {
   const params = useParams()
-  const slug = params.slug // misalnya: "html", "css", "javascript"
+  const slug = params.slug
+  const [course, setCourse] = useState<Course | null>(null)
 
   useEffect(() => {
-    // Fetch detail course berdasarkan slug
     fetch(`/api/course/${slug}`)
       .then(res => res.json())
-      .then(data => {
-        // Simpan data course ke state jika perlu
-        console.log(data)
-      })
+      .then((data: Course) => setCourse(data))
       .catch(err => console.error(err))
   }, [slug])
 
