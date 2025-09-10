@@ -66,7 +66,8 @@ export default function CourseDetailPage() {
           <div className="img flex justify-center">
             <Image src={course?.image ?? "/default-course.png"} alt={course?.title ?? "Course"} width={90} height={90} className="rounded-lg"/>
           </div>
-          <div>{course?.title}</div>
+          <div className="text-center">{course?.title}</div>
+
           <div>{course?.description}</div>
           <div>
             {course?.topics.map(topic => (
