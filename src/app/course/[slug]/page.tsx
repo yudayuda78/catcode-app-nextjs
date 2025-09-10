@@ -12,6 +12,7 @@ import Link from 'next/link'
 type Lesson = {
   id: number;
   title: string;
+  slug: string;
   videoUrl: string;
   createdAt: string;
   topicId: number;
@@ -73,11 +74,13 @@ export default function CourseDetailPage() {
             {course?.topics.map(topic => (
               <div key={topic.id}>
                 <h3>{topic.title}</h3>
-                <div>
+                <div className='bg-blue-100 p-4 my-4'>
                   {topic.lessons.map(lesson => (
                     <div key={lesson.id}>
-                      <h4>{lesson.title}</h4>
-                      <video src={lesson.videoUrl} controls />
+                      <Link href={`/course/${course?.slug}/${lesson.id}`}>
+                        <h4>{lesson.title}</h4>
+                      </Link>
+                      {/* <video src={lesson.videoUrl} controls /> */}
                     </div>
                   ))}
                 </div>
