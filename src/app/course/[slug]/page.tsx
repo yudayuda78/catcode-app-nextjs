@@ -49,6 +49,7 @@ export default function CourseDetailPage() {
   const params = useParams()
   const slug = params.slug
   const [course, setCourse] = useState<Course | null>(null)
+  const [openTopicId, setOpenTopicId] = useState<number | null>(null)
 
   useEffect(() => {
     fetch(`/api/course/${slug}`)
@@ -57,40 +58,65 @@ export default function CourseDetailPage() {
       .catch(err => console.error(err))
   }, [slug])
 
+  const toggleTopic = (id: number) => {
+    setOpenTopicId(openTopicId === id ? null : id)
+  }
+
   return (
    <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <Section backgroundColor="bg-white" height="min-h-[400px]">
-        <div className="max-w-6xl mx-auto px-4 py-10">
+        <div className="w-full bg-amber-100">
           
-          <div className="img flex justify-center">
+          <div className="img flex justify-center bg-amber-200">
             <Image src={course?.image ?? "/default-course.png"} alt={course?.title ?? "Course"} width={90} height={90} className="rounded-lg"/>
           </div>
           <div className="text-center">{course?.title}</div>
 
           <div>{course?.description}</div>
-          <div>
+          <div className='bg-amber-600'>
             {course?.topics.map(topic => (
               <div key={topic.id}>
-                <h3>{topic.title}</h3>
-                <div className='bg-blue-100 p-4 my-4'>
-                  {topic.lessons.map(lesson => (
-                    <div key={lesson.id}>
-                      <Link href={`/course/${course?.slug}/${lesson.id}`}>
-                        <h4>{lesson.title}</h4>
-                      </Link>
-                      {/* <video src={lesson.videoUrl} controls /> */}
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  {topic.tests.map(test => (
-                    <div key={test.id}>
-                      <h4>{test.title}</h4>
-                    </div>
-                  ))}
-                </div>
+                   <button
+                  className="w-full md:w-1/2 lg:w-full flex justify-between items-center p-4 bg-blue-200 hover:bg-blue-300 font-semibold rounded-lg transition"
+                  onClick={() => toggleTopic(topic.id)}
+                >
+                  <span>{topic.title}</span>
+                  <span>{openTopicId === topic.id ? "▲" : "▼"}</span>
+                </button>
+
+               {openTopicId === topic.id && (
+                  <div className="bg-blue-50 p-4">
+                    <div className="mb-2 font-medium">Lessons:</div>
+                    {topic.lessons.length > 0 ? (
+                      topic.lessons.map(lesson => (
+                        <div key={lesson.id} className="ml-4 my-1">
+                          <Link
+                            href={`/course/${course?.slug}/${lesson.id}`}
+                            className="text-blue-600 hover:underline"
+                          >
+                            {lesson.title}
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="ml-4 text-gray-500">No lessons yet.</p>
+                    )}
+
+                    {topic.tests.length > 0 && (
+                      <div className="mt-4">
+                        <div className="font-medium">Tests:</div>
+                        {topic.tests.map(test => (
+                          <div key={test.id} className="ml-4 my-1">
+                            <span className="text-gray-700">{test.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+             
               </div>
             ))}
           </div>
