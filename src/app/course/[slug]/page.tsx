@@ -49,7 +49,7 @@ export default function CourseDetailPage() {
   const params = useParams()
   const slug = params.slug
   const [course, setCourse] = useState<Course | null>(null)
-  const [openTopicId, setOpenTopicId] = useState<number | null>(null)
+  const [openTopics, setOpenTopics] = useState<number[]>([])
 
   useEffect(() => {
     fetch(`/api/course/${slug}`)
@@ -59,8 +59,16 @@ export default function CourseDetailPage() {
   }, [slug])
 
   const toggleTopic = (id: number) => {
-    setOpenTopicId(openTopicId === id ? null : id)
+    setOpenTopics(prev => 
+      prev.includes(id) 
+      ? prev.filter(tid => tid !== id) 
+      : [...prev, id]                  
+    )
   }
+
+  useEffect(() => {
+  console.log("Open Topics:", openTopics)
+}, [openTopics])
 
   return (
    <div className="min-h-screen flex flex-col">
@@ -69,7 +77,7 @@ export default function CourseDetailPage() {
       <Section backgroundColor="bg-white" height="min-h-[400px]">
         <div className="w-full bg-amber-100">
           
-          <div className="img flex justify-center bg-amber-200">
+          <div className="img flex mt-8 justify-center bg-amber-200">
             <Image src={course?.image ?? "/default-course.png"} alt={course?.title ?? "Course"} width={90} height={90} className="rounded-lg"/>
           </div>
           <div className="text-center">{course?.title}</div>
@@ -79,14 +87,14 @@ export default function CourseDetailPage() {
             {course?.topics.map(topic => (
               <div key={topic.id}>
                    <button
-                  className="w-full md:w-1/2 lg:w-full flex justify-between items-center p-4 bg-blue-200 hover:bg-blue-300 font-semibold rounded-lg transition"
+                  className="w-full md:w-1/2 mt-2 lg:w-full flex justify-between items-center p-4 bg-amber-200 hover:bg-green-300 font-semibold rounded-lg transition"
                   onClick={() => toggleTopic(topic.id)}
                 >
                   <span>{topic.title}</span>
-                  <span>{openTopicId === topic.id ? "▲" : "▼"}</span>
+                  <span>{openTopics.includes(topic.id) ? "▲" : "▼"}</span>
                 </button>
 
-               {openTopicId === topic.id && (
+               {openTopics.includes(topic.id) && (
                   <div className="bg-blue-50 p-4">
                     <div className="mb-2 font-medium">Lessons:</div>
                     {topic.lessons.length > 0 ? (
