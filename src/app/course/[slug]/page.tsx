@@ -50,6 +50,7 @@ export default function CourseDetailPage() {
   const slug = params.slug
   const [course, setCourse] = useState<Course | null>(null)
   const [openTopics, setOpenTopics] = useState<number[]>([])
+  const [openDescription, setOpenDescription] = useState<boolean>(false)
 
   useEffect(() => {
     fetch(`/api/course/${slug}`)
@@ -57,6 +58,11 @@ export default function CourseDetailPage() {
       .then((data: Course) => setCourse(data))
       .catch(err => console.error(err))
   }, [slug])
+
+  const toggleDescription = () => {
+    setOpenDescription(prev => !prev)
+  }
+
 
   const toggleTopic = (id: number) => {
     setOpenTopics(prev => 
@@ -67,27 +73,51 @@ export default function CourseDetailPage() {
   }
 
   useEffect(() => {
-  console.log("Open Topics:", openTopics)
-}, [openTopics])
+    console.log("Open Topics:", openTopics)
+  }, [openTopics])
 
   return (
    <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <Section backgroundColor="bg-white" height="min-h-[400px]">
-        <div className="w-full bg-amber-100">
+        <div className="w-full">
           
-          <div className="img flex mt-8 justify-center bg-amber-200">
+          <div className="img flex mt-8 justify-center">
             <Image src={course?.image ?? "/default-course.png"} alt={course?.title ?? "Course"} width={90} height={90} className="rounded-lg"/>
           </div>
-          <div className="text-center">{course?.title}</div>
+          <div className="text-center font-bold text-2xl">{course?.title}</div>
 
-          <div>{course?.description}</div>
-          <div className='bg-amber-600'>
+
+          <div >
+            <div>
+              <button
+                  className="w-full md:w-1/2 mt-2 lg:w-full flex justify-between items-center p-4 text-white bg-orange-400 hover:bg-orange-500 font-semibold rounded-lg transition"
+                  onClick={() => toggleDescription()}
+                >
+                  <span>Pre Prequisite</span>
+                  <span>{openDescription ? "▲" : "▼"}</span>
+                </button>
+
+
+              {openDescription && (
+              <div className="bg-blue-50 p-4">
+                {course?.description ? (
+                <div className="mb-2 font-medium">{course?.description}</div>
+                ) : (
+                <p className="ml-4 text-gray-500">No Description.</p>
+                )}
+              </div>
+)}
+
+            </div>
+          </div>
+
+          <div>
             {course?.topics.map(topic => (
               <div key={topic.id}>
                    <button
-                  className="w-full md:w-1/2 mt-2 lg:w-full flex justify-between items-center p-4 bg-amber-200 hover:bg-green-300 font-semibold rounded-lg transition"
+                  className="w-full md:w-1/2 mt-2 lg:w-full flex justify-between items-center p-4 text-white bg-orange-400 hover:bg-orange-500 font-semibold rounded-lg transition"
                   onClick={() => toggleTopic(topic.id)}
                 >
                   <span>{topic.title}</span>
