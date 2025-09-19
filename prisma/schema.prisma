@@ -43,7 +43,7 @@ model Topic{
 
 model Lesson{
   id Int @id @default(autoincrement())
-  index Int
+  index Int?
   title String
   slug  String @default("") @unique
   videoUrl String
